@@ -1,0 +1,7 @@
+.vs
+build/
+bin/
+obj/
+*.lib
+*.so
+*.dll

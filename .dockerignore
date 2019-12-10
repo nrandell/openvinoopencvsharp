@@ -1,0 +1,8 @@
+Docker
+.git
+obj
+bin
+build
+.vs
+build*.ps1
+build*.sh

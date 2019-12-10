@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FaceDetectionOpenVino": {
+      "commandName": "Project",
+      "commandLineArgs": "dshow \"video=Razer Kiyo\" \"c:\\users\\nick\\downloads\\models\\face-detection-retail-0005.bin\" \"c:\\temp\\pddumps\\local\""
+    }
+  }
+}

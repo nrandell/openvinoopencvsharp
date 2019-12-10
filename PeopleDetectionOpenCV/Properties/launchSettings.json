@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "PeopleDetectionOpenCV": {
+      "commandName": "Project",
+      "commandLineArgs": "dshow \"video=Razer Kiyo\" \"c:\\users\\nick\\downloads\\models\\res10_300x300_ssd_iter_140000_fp16.caffemodel\" \"c:\\temp\\pddumps\""
+    },
+    "PeopleDetectionOpenCVTF": {
+      "commandName": "Project",
+      "commandLineArgs": "dshow \"video=Razer Kiyo\" \"c:\\users\\nick\\downloads\\models\\opencv_face_detector_uint8.pb\" \"c:\\temp\\pddumps\""
+    }
+  }
+}
