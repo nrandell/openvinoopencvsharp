@@ -77,7 +77,7 @@ COPY OpenVinoOpenCvSharpExtern/ OpenVinoOpenCvSharpExtern/
 
 WORKDIR /OpenVinoOpenCvSharp/build/
 RUN cmake \
-        -D OpenCV_DIR=/opencvbuild/install/cmake \
+        -D OpenCV_DIR=/opencv/install/lib/cmake/opencv4 \
         -D InferenceEngine_DIR=/opt/intel/openvino/deployment_tools/inference_engine/share \
         -D CMAKE_INSTALL_PREFIX=../install \
         ..
@@ -117,7 +117,7 @@ RUN dotnet publish --no-build -c Release -o /app/FaceDetectionOpenVino/publish
 
 FROM dotnet-runtime as final
 WORKDIR /app
-COPY --from=opencv-build /opencvsharp/install/ /opt/opencv/
+COPY --from=opencv-build /opencv/install/ /opt/opencv/
 COPY --from=opencv-build /OpenVinoOpenCvSharp/install/lib/libOpenVinoOpenCvSharpExtern.so /opt/
 
 ENV LD_LIBRARY_PATH=/opt:/opt/opencv/lib:/opt/intel/openvino/deployment_tools/inference_engine/lib/armv7l
@@ -127,4 +127,4 @@ COPY --from=publish /app/ .
 # COPY PeopleDetectionOpenCV/run.sh .
 # RUN chmod a+x run.sh
 
-# ENTRYPOINT [ "./run.sh" ]
+# # ENTRYPOINT [ "./run.sh" ]
