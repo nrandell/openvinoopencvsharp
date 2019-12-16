@@ -1,6 +1,6 @@
+using OpenCvSharp.Util;
 using System;
 using System.Collections.Generic;
-using OpenCvSharp.Util;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable IdentifierTypo
 // ReSharper disable InconsistentNaming
@@ -40,7 +40,7 @@ namespace OpenCvSharp.Dnn
         {
             this.ptr = ptr;
         }
-        
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -224,6 +224,20 @@ namespace OpenCvSharp.Dnn
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string?[] GetLayerTypes()
+        {
+            using (var typesVec = new VectorOfString())
+            {
+                NativeMethods.dnn_Net_getLayerTypes(ptr, typesVec.CvPtr);
+                GC.KeepAlive(this);
+                return typesVec.ToArray();
+            }
+        }
+
+        /// <summary>
         /// Connects output of the first layer to input of the second layer.
         /// </summary>
         /// <param name="outPin">descriptor of the first layer output.</param>
@@ -364,17 +378,19 @@ namespace OpenCvSharp.Dnn
         /// </summary>
         /// <param name="blob">new blob.</param>
         /// <param name="name">descriptor of the updating layer output blob.</param>
+        /// <param name="scaleFactor">multiplier for @p image values.</param>
+        /// <param name="mean">scalar with mean values which are subtracted from channels</param>
         /// <remarks>
         /// connect(String, String) to know format of the descriptor.
         /// If updating blob is not empty then @p blob must have the same shape, 
         /// because network reshaping is not implemented yet.
         /// </remarks>
-        public void SetInput(Mat blob, string name = "")
+        public void SetInput(Mat blob, string name = "", double scaleFactor = 1.0, Scalar mean = default)
         {
             if (blob == null)
                 throw new ArgumentNullException(nameof(blob));
 
-            NativeMethods.dnn_Net_setInput(ptr, blob.CvPtr, name);
+            NativeMethods.dnn_Net_setInput(ptr, blob.CvPtr, name, scaleFactor, mean);
             GC.KeepAlive(this);
         }
 
@@ -493,7 +509,7 @@ namespace OpenCvSharp.Dnn
             OPENCL_FP16,
             MYRIAD,
             VULKAN,
-            FPGA, 
+            FPGA,
             CUDA,
             CUDA_FP16
 #pragma warning restore CS1591

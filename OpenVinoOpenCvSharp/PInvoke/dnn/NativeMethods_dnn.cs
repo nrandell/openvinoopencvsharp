@@ -43,11 +43,11 @@ namespace OpenCvSharp
 
         [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern IntPtr dnn_blobFromImage(
-            IntPtr image, double scalefactor, Size size, Scalar mean, int swapRB, int crop);
+            IntPtr image, double scalefactor, Size size, Scalar mean, int swapRB, int crop, int ddepth);
 
         [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern IntPtr dnn_blobFromImages(
-            IntPtr[] images, int imagesLength, double scalefactor, Size size, Scalar mean, int swapRB, int crop);
+            IntPtr[] images, int imagesLength, double scalefactor, Size size, Scalar mean, int swapRB, int crop, int ddepth);
 
         [DllImport(DllExtern, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         public static extern void dnn_shrinkCaffeModel(

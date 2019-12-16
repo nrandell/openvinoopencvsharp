@@ -30,6 +30,11 @@ CVAPI(void) dnn_Net_getLayerNames(cv::dnn::Net* net, std::vector<cv::String> *ou
 	outVec->assign(result.begin(), result.end());
 }
 
+CVAPI(void) dnn_Net_getLayerTypes(cv::dnn::Net* net, std::vector<cv::String> *outVec)
+{
+	net->getLayerTypes(*outVec);
+}
+
 CVAPI(void) dnn_Net_connect1(cv::dnn::Net* net, const char *outPin, const char *inpPin)
 {
 	net->connect(outPin, inpPin);
@@ -107,10 +112,10 @@ CVAPI(void) dnn_Net_setPreferableTarget(cv::dnn::Net* net, int targetId)
     net->setPreferableTarget(targetId);
 }
 
-CVAPI(void) dnn_Net_setInput(cv::dnn::Net* net, const cv::Mat *blob, const char *name)
+CVAPI(void) dnn_Net_setInput(cv::dnn::Net* net, const cv::Mat *blob, const char *name, const double scalefactor, const MyCvScalar mean)
 {
     const cv::String nameStr = (name == nullptr) ? "" : cv::String(name);
-    net->setInput(*blob, name);
+    net->setInput(*blob, name, scalefactor, cpp(mean));
 }
 
 CVAPI(void) dnn_Net_getUnconnectedOutLayers(cv::dnn::Net* net, std::vector<int> *result)

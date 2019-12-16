@@ -1,6 +1,6 @@
-﻿using System;
+﻿using OpenCvSharp.Util;
+using System;
 using System.Collections.Generic;
-using OpenCvSharp.Util;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable InconsistentNaming
 // ReSharper disable CommentTypo
@@ -130,18 +130,19 @@ namespace OpenCvSharp.Dnn
         /// to be in (mean-R, mean-G, mean-B) order if @p image has BGR ordering and @p swapRB is true.</param>
         /// <param name="swapRB">flag which indicates that swap first and last channels in 3-channel image is necessary.</param>
         /// <param name="crop">flag which indicates whether image will be cropped after resize or not</param>
+        /// <param name="ddepth">Depth of output blob. Choose CV_32F or CV_8U</param>
         /// <returns>4-dimansional Mat with NCHW dimensions order.</returns>
         /// <remarks>if @p crop is true, input image is resized so one side after resize is equal to corresponing 
         /// dimension in @p size and another one is equal or larger.Then, crop from the center is performed. 
         /// If @p crop is false, direct resize without cropping and preserving aspect ratio is performed.</remarks>
         public static Mat BlobFromImage(
             Mat image, double scaleFactor = 1.0, Size size = default,
-            Scalar mean = default, bool swapRB = true, bool crop = true)
+            Scalar mean = default, bool swapRB = true, bool crop = true, int ddepth = MatType.CV_32F)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
 
-            var ptr = NativeMethods.dnn_blobFromImage(image.CvPtr, scaleFactor, size, mean, swapRB ? 1 : 0, crop ? 1 : 0);
+            var ptr = NativeMethods.dnn_blobFromImage(image.CvPtr, scaleFactor, size, mean, swapRB ? 1 : 0, crop ? 1 : 0, ddepth);
             return new Mat(ptr);
         }
 
@@ -156,13 +157,14 @@ namespace OpenCvSharp.Dnn
         /// to be in (mean-R, mean-G, mean-B) order if @p image has BGR ordering and @p swapRB is true.</param>
         /// <param name="swapRB">flag which indicates that swap first and last channels in 3-channel image is necessary.</param>
         /// <param name="crop">flag which indicates whether image will be cropped after resize or not</param>
+        /// <param name="ddepth">Depth of output blob. Choose CV_32F or CV_8U</param>
         /// <returns>4-dimansional Mat with NCHW dimensions order.</returns>
         /// <remarks>if @p crop is true, input image is resized so one side after resize is equal to corresponing 
         /// dimension in @p size and another one is equal or larger.Then, crop from the center is performed. 
         /// If @p crop is false, direct resize without cropping and preserving aspect ratio is performed.</remarks>
         public static Mat BlobFromImages(
             IEnumerable<Mat> images, double scaleFactor,
-            Size size = default, Scalar mean = default, bool swapRB = true, bool crop = true)
+            Size size = default, Scalar mean = default, bool swapRB = true, bool crop = true, int ddepth = MatType.CV_32F)
         {
             if (images == null)
                 throw new ArgumentNullException(nameof(images));
@@ -170,10 +172,10 @@ namespace OpenCvSharp.Dnn
             var imagesPointers = EnumerableEx.SelectPtrs(images);
 
             var ptr = NativeMethods.dnn_blobFromImages(
-                imagesPointers, imagesPointers.Length, scaleFactor, size, mean, swapRB ? 1 : 0, crop ? 1 : 0);
+                imagesPointers, imagesPointers.Length, scaleFactor, size, mean, swapRB ? 1 : 0, crop ? 1 : 0, ddepth);
             return new Mat(ptr);
         }
-        
+
         /// <summary>
         /// Convert all weights of Caffe network to half precision floating point.
         /// </summary>
@@ -210,7 +212,7 @@ namespace OpenCvSharp.Dnn
 
             NativeMethods.dnn_writeTextGraph(model, output);
         }
-        
+
         /// <summary>
         /// Performs non maximum suppression given boxes and corresponding scores.
         /// </summary>

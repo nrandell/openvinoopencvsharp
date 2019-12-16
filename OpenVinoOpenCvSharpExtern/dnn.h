@@ -64,19 +64,19 @@ CVAPI(cv::Mat*) dnn_readTensorFromONNX(const char *path)
 }
 
 CVAPI(cv::Mat*) dnn_blobFromImage(
-	cv::Mat *image, const double scalefactor, const MyCvSize size, const MyCvScalar mean, const int swapRB, const int crop)
+	cv::Mat *image, const double scalefactor, const MyCvSize size, const MyCvScalar mean, const int swapRB, const int crop, const int ddepth)
 {
-	const auto blob = cv::dnn::blobFromImage(*image, scalefactor, cpp(size), cpp(mean), swapRB != 0, crop != 0);
+	const auto blob = cv::dnn::blobFromImage(*image, scalefactor, cpp(size), cpp(mean), swapRB != 0, crop != 0, ddepth);
 	return new cv::Mat(blob);
 }
 
 CVAPI(cv::Mat*) dnn_blobFromImages(
-	const cv::Mat **images, const int imagesLength, const double scalefactor, const MyCvSize size, const MyCvScalar mean, const int swapRB, const int crop)
+	const cv::Mat **images, const int imagesLength, const double scalefactor, const MyCvSize size, const MyCvScalar mean, const int swapRB, const int crop, const int ddepth)
 {
 	std::vector<cv::Mat> imagesVec;
 	toVec(images, imagesLength, imagesVec);
 
-	const auto blob = cv::dnn::blobFromImages(imagesVec, scalefactor, cpp(size), cpp(mean), swapRB != 0, crop != 0);
+	const auto blob = cv::dnn::blobFromImages(imagesVec, scalefactor, cpp(size), cpp(mean), swapRB != 0, crop != 0, ddepth);
 	return new cv::Mat(blob);
 }
 

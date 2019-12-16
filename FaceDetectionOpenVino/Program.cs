@@ -42,7 +42,23 @@ namespace FaceDetectionOpenVino
                 }
 
                 var dataTransfer = new DataTransfer<MatAndBuffer>();
-                var detector = new InferenceEngineDetector(model);
+                IDetector detector;
+                if (model.EndsWith("bin", StringComparison.OrdinalIgnoreCase))
+                {
+                    detector = new InferenceEngineDetector(model);
+                }
+                else if (model.EndsWith("cfg", StringComparison.OrdinalIgnoreCase))
+                {
+                    detector = new TinyYoloV3Detector(model);
+                }
+                else if (model.EndsWith("caffemodel", StringComparison.OrdinalIgnoreCase))
+                {
+                    detector = new CaffeDnnFaceDetector(model);
+                }
+                else
+                {
+                    throw new ArgumentException($"Unknown model type: {model}");
+                }
                 ProcessStream(inputFormat, inputCamera, dataTransfer);
 
                 var counter = 0;
@@ -86,6 +102,21 @@ namespace FaceDetectionOpenVino
         }
 
         private static void HandleFrame(Mat mat, byte[] buffer, ref int counter, IDetector detector, DirectoryInfo outputFolder)
+        {
+            var sw = Stopwatch.StartNew();
+
+            var faces = detector.Detect(mat, buffer);
+            var predictTime = sw.Elapsed;
+            if (faces.Length > 0)
+            {
+                var rectangle = faces[0];
+                var centerX = rectangle.Left + (rectangle.Width / 2);
+                var centerY = rectangle.Top + (rectangle.Height / 2);
+                Console.WriteLine($"Processed {counter} in {predictTime} @ ({centerX},{centerY})");
+            }
+        }
+
+        private static void HandleFrameAndOutput(Mat mat, byte[] buffer, ref int counter, IDetector detector, DirectoryInfo outputFolder)
         {
             var sw = Stopwatch.StartNew();
 

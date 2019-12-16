@@ -2,8 +2,8 @@ call "C:\Program Files (x86)\IntelSWTools\openvino\bin\setupvars.bat"
 
 PATH="C:\Program Files\CMake\bin\";%PATH%
 
-rmdir /s/q build
-mkdir build
+REM rmdir /s/q build
+REM mkdir build
 cd build
 
 cmake ^
