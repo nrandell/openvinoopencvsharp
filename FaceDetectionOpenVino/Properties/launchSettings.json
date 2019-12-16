@@ -1,8 +1,24 @@
 {
   "profiles": {
+    "PersonDetectionRetail0013INT8": {
+      "commandName": "Project",
+      "commandLineArgs": "dshow \"video=Razer Kiyo\" \"c:\\users\\nick\\downloads\\models\\person-detection-retail-0013\\FP16\\person-detection-retail-0013.bin\" \"c:\\temp\\pddumps\\local\""
+    },
+    "YoloV3": {
+      "commandName": "Project",
+      "commandLineArgs": "dshow \"video=Razer Kiyo\" \"c:\\users\\nick\\downloads\\models\\yolov3.cfg\" \"c:\\temp\\pddumps\\local\""
+    },
+    "TinyYoloV3": {
+      "commandName": "Project",
+      "commandLineArgs": "dshow \"video=Razer Kiyo\" \"c:\\users\\nick\\downloads\\models\\yolov3-2\\yolov3-tiny.cfg\" \"c:\\temp\\pddumps\\local\""
+    },
     "FaceDetectionOpenVino": {
       "commandName": "Project",
-      "commandLineArgs": "dshow \"video=Razer Kiyo\" \"c:\\users\\nick\\downloads\\models\\face-detection-retail-0005.bin\" \"c:\\temp\\pddumps\\local\""
+      "commandLineArgs": "dshow \"video=Razer Kiyo\" \"c:\\users\\nick\\downloads\\models\\face-detection-retail-0005\\FP16\\face-detection-retail-0005.bin\" \"c:\\temp\\pddumps\\local\""
+    },
+    "MobileNetSSD": {
+      "commandName": "Project",
+      "commandLineArgs": "dshow \"video=Razer Kiyo\" \"c:\\users\\nick\\downloads\\models\\MobileNetSSD_deploy.caffemodel\" \"c:\\temp\\pddumps\\local\""
     }
   }
 }
