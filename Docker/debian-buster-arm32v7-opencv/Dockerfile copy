@@ -86,6 +86,35 @@ RUN make -j4 && \
     make install
 
 
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/core/sdk:3.1.100-buster AS build
+WORKDIR /build
+
+COPY OpenVinoOpenCvSharp/OpenVinoOpenCvSharp.csproj OpenVinoOpenCvSharp/
+COPY PeopleDetectionOpenCV/PeopleDetectionOpenCV.csproj PeopleDetectionOpenCV/
+COPY Shared/Shared.csproj Shared/
+COPY FaceDetectionOpenVino/FaceDetectionOpenVino.csproj FaceDetectionOpenVino/
+
+RUN dotnet restore PeopleDetectionOpenCV/PeopleDetectionOpenCV.csproj
+RUN dotnet restore FaceDetectionOpenVino/FaceDetectionOpenVino.csproj
+
+COPY OpenVinoOpenCvSharp/ OpenVinoOpenCvSharp/
+COPY PeopleDetectionOpenCV/ PeopleDetectionOpenCV/
+COPY Shared/ Shared/
+COPY FaceDetectionOpenVino/ FaceDetectionOpenVino/
+
+WORKDIR /build/PeopleDetectionOpenCV
+RUN dotnet build -c Release
+
+WORKDIR /build/FaceDetectionOpenVino
+RUN dotnet build -c Release
+
+FROM build AS publish
+WORKDIR /build/PeopleDetectionOpenCV
+RUN dotnet publish --no-build -c Release -o /app/PeopleDetectionOpenCV/publish
+
+WORKDIR /build/FaceDetectionOpenVino
+RUN dotnet publish --no-build -c Release -o /app/FaceDetectionOpenVino/publish
+
 FROM dotnet-runtime as final
 WORKDIR /app
 COPY --from=opencv-build /opencv/install/ /opt/opencv/
@@ -93,3 +122,9 @@ COPY --from=opencv-build /OpenVinoOpenCvSharp/install/lib/libOpenVinoOpenCvSharp
 
 ENV LD_LIBRARY_PATH=/opt:/opt/opencv/lib:/opt/intel/openvino/deployment_tools/inference_engine/lib/armv7l
 
+COPY --from=publish /app/ .
+
+# COPY PeopleDetectionOpenCV/run.sh .
+# RUN chmod a+x run.sh
+
+# # ENTRYPOINT [ "./run.sh" ]
