@@ -1,5 +1,5 @@
-VERSION="1.0.4"
+VERSION="1.1.0"
 
-docker buildx build --platform linux/arm/v7 -t "nrandell/arm-opencv-nick-builder:$VERSION" -f Dockerfile --push ../..
+docker buildx build --platform linux/arm/v7 -t "nrandell/dotnet-arm-openvino-opencv:$VERSION" -f Dockerfile --push ../..
 
 
