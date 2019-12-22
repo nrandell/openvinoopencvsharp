@@ -18,9 +18,10 @@ namespace FaceDetectionOpenVino
             var configFile = Path.ChangeExtension(modelFile, ".prototxt")!;
 
             Net = CvDnn.ReadNetFromCaffe(configFile, modelFile);
-            Cv2.SetNumThreads(2);
-            Net.SetPreferableBackend(Net.Backend.OPENCV);
-            Net.SetPreferableTarget(Net.Target.OPENCL);
+            //Cv2.SetNumThreads(2);
+            //Net.SetPreferableBackend(Net.Backend.OPENCV);
+            Net.SetPreferableBackend(Net.Backend.INFERENCE_ENGINE);
+            //Net.SetPreferableTarget(Net.Target.OPENCL);
         }
 
         public Rectangle[] Detect(Mat mat, byte[] buffer)
