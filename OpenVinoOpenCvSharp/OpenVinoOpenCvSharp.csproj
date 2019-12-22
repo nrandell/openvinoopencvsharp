@@ -12,6 +12,8 @@
     <Configurations>Debug;Release</Configurations>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
+    <VersionPrefix>0.0.1</VersionPrefix>
+    <VersionSuffix>alpha-2</VersionSuffix>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(TargetFramework.Contains('netstandard')) Or $(TargetFramework.Contains('netcoreapp')) ">
