@@ -7,9 +7,10 @@ message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 file(GLOB OPENVINOOPENCVSHARP_FILES *.cpp)
 
 find_package(OpenCV REQUIRED)
+find_package(InferenceEngine REQUIRED)
 
 add_library(OpenVinoOpenCvSharpExtern SHARED ${OPENVINOOPENCVSHARP_FILES})
-target_link_libraries(OpenVinoOpenCvSharpExtern ${OpenCV_LIBS})
+target_link_libraries(OpenVinoOpenCvSharpExtern ${OpenCV_LIBS} ${InferenceEngine_LIBRARIES})
 
 install(TARGETS OpenVinoOpenCvSharpExtern
     RUNTIME DESTINATION bin

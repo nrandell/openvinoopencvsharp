@@ -1,5 +1,5 @@
-$VERSION="1.0.3"
+$VERSION="1.1.0"
 
-docker buildx build --platform linux/arm/v7 -t "nrandell/arm-nick-builder:$VERSION" -f Dockerfile --push ../..
+docker buildx build --platform linux/arm/v7 -t "nrandell/dotnet-arm-openvino:$VERSION" -f Dockerfile --push ../..
 
 
