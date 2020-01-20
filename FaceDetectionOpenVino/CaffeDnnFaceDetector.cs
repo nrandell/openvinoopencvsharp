@@ -21,6 +21,7 @@ namespace FaceDetectionOpenVino
             //Cv2.SetNumThreads(2);
             //Net.SetPreferableBackend(Net.Backend.OPENCV);
             Net.SetPreferableBackend(Net.Backend.INFERENCE_ENGINE);
+            Net.SetPreferableTarget(Net.Target.MYRIAD);
             //Net.SetPreferableTarget(Net.Target.OPENCL);
         }
 
