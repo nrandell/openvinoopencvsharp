@@ -72,4 +72,20 @@ RUN cmake \
 RUN make -j$(nproc)
 RUN make install
 
+ARG DLDT_VERSION=2019_R3.1
 
+WORKDIR /source
+
+# Get dldt
+RUN wget https://github.com/opencv/dldt/archive/${DLDT_VERSION}.zip && \
+    unzip ${DLDT_VERSION}.zip && \
+    rm ${DLDT_VERSION}.zip && \
+    mv dldt-${DLDT_VERSION} dldt
+
+WORKDIR /build/inference_engine
+
+RUN cmake \
+    -D CMAKE_TOOLCHAIN_FILE=/source/dldt/inference_engine/cmake/arm64.toolchain.cmake \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D ENABLE_GNA=OFF \
+    /source/dldt/inference_engine

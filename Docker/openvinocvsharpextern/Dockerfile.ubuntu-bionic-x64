@@ -1,0 +1,30 @@
+FROM nrandell/openvino-dotnet-core-runtime:3.1.1-2019.3.376-1 as native-build
+
+ARG OPENCVSHARP_VERSION=4.2.0.20200108
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    unzip \
+    cmake
+
+WORKDIR /source
+
+RUN wget https://github.com/shimat/opencvsharp/archive/${OPENCVSHARP_VERSION}.zip && \
+    unzip ${OPENCVSHARP_VERSION}.zip && \
+    rm ${OPENCVSHARP_VERSION}.zip && \
+    mv opencvsharp-${OPENCVSHARP_VERSION} opencvsharp 
+
+WORKDIR /source/opencvsharp/src/OpenCvSharpExtern/
+COPY ["CMakeLists.txt", "include_opencv.h", "/source/opencvsharp/src/OpenCvSharpExtern/"]
+
+WORKDIR /build
+
+
+RUN cmake \
+    -D OpenCV_DIR=/opt/intel/openvino/opencv/cmake \
+    -D InferenceEngine_DIR=/opt/intel/openvino/inference_engine/share \
+    -D CMAKE_INSTALL_PREFIX=/install \
+    /source/opencvsharp/src
+
+RUN make 
+# RUN make install
