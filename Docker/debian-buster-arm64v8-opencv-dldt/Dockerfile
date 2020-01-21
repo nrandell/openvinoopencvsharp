@@ -85,7 +85,7 @@ RUN wget https://github.com/opencv/dldt/archive/${DLDT_VERSION}.zip && \
 WORKDIR /build/inference_engine
 
 RUN cmake \
-    -D CMAKE_TOOLCHAIN_FILE=/source/dldt/inference_engine/cmake/arm64.toolchain.cmake \
+    -D CMAKE_TOOLCHAIN_FILE=/source/dldt/inference-engine/cmake/arm64.toolchain.cmake \
     -D CMAKE_BUILD_TYPE=Release \
     -D ENABLE_GNA=OFF \
-    /source/dldt/inference_engine
+    /source/dldt/inference-engine
