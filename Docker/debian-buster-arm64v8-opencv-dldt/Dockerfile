@@ -72,20 +72,53 @@ RUN cmake \
 RUN make -j$(nproc)
 RUN make install
 
+
+RUN apt-get update  && apt-get install -y --no-install-recommends \
+    libusb-1.0-0-dev \
+    git
+
 ARG DLDT_VERSION=2019_R3.1
 
 WORKDIR /source
+RUN git clone --no-checkout https://github.com/opencv/dldt.git
+WORKDIR /source/dldt
+RUN git checkout tags/${DLDT_VERSION}
 
-# Get dldt
-RUN wget https://github.com/opencv/dldt/archive/${DLDT_VERSION}.zip && \
-    unzip ${DLDT_VERSION}.zip && \
-    rm ${DLDT_VERSION}.zip && \
-    mv dldt-${DLDT_VERSION} dldt
+WORKDIR /source/dldt/inference-engine
+RUN git submodule init
+RUN git submodule update --recursive
 
-WORKDIR /build/inference_engine
+WORKDIR /build/inference-engine
+
+RUN apt-get update  && apt-get install -y --no-install-recommends \
+    libpython3-dev \
+    python3-pip
 
 RUN cmake \
     -D CMAKE_TOOLCHAIN_FILE=/source/dldt/inference-engine/cmake/arm64.toolchain.cmake \
     -D CMAKE_BUILD_TYPE=Release \
+    -D ENABLE_OPENCV=OFF \
+    -D ENABLE_ROCKHOPER=OFF \
+    -D ENABLE_SAMPLES=OFF \
+    -D ENABLE_TESTS=OFF \
+    -D ENABLE_CLDNN=OFF \
     -D ENABLE_GNA=OFF \
+    -D ENABLE_SSE42=OFF \
+    -D THREADING=SEQ \
+    -D ENABLE_MKL_DNN=OFF \
+    -D GEMM=JIT \
+    -D THREADS_PTHREAD_ARG="-pthread" \
     /source/dldt/inference-engine
+
+RUN make -j$(nproc)
+
+RUN mkdir -p /install/inference-engine/lib \
+    && mv /source/dldt/inference-engine/bin/aarch64/Release/lib /install/inference-engine/lib/aarch64 \
+    && mv /source/dldt/inference-engine/bin/aarch64/Release/* /install/inference-engine/lib/aarch64/ \
+    && mv /build/inference-engine/share /install/inference-engine/
+    
+
+
+FROM dotnet-runtime as final
+
+COPY --from=native-build /install /install
