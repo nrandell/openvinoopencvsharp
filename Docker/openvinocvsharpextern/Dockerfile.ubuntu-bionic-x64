@@ -27,4 +27,4 @@ RUN cmake \
     /source/opencvsharp/src
 
 RUN make 
-# RUN make install
+RUN make install

@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenVinoOpenCvSharp", "OpenVinoOpenCvSharp\OpenVinoOpenCvSharp.csproj", "{323B93E1-9EA9-4641-A415-821BBB0D1516}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceDetectionOpenVino", "FaceDetectionOpenVino\FaceDetectionOpenVino.csproj", "{486BCF83-C85E-4855-9619-3B902331C36A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaceDetectionOpenVino", "FaceDetectionOpenVino\FaceDetectionOpenVino.csproj", "{486BCF83-C85E-4855-9619-3B902331C36A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneFaceDetection", "StandaloneFaceDetection\StandaloneFaceDetection.csproj", "{024B5AA6-2E2D-4E1B-A1FE-DEAFB4F1B816}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,14 @@ Global
 		{486BCF83-C85E-4855-9619-3B902331C36A}.Release|Any CPU.ActiveCfg = Release|x64
 		{486BCF83-C85E-4855-9619-3B902331C36A}.Release|x64.ActiveCfg = Release|x64
 		{486BCF83-C85E-4855-9619-3B902331C36A}.Release|x64.Build.0 = Release|x64
+		{024B5AA6-2E2D-4E1B-A1FE-DEAFB4F1B816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{024B5AA6-2E2D-4E1B-A1FE-DEAFB4F1B816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{024B5AA6-2E2D-4E1B-A1FE-DEAFB4F1B816}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{024B5AA6-2E2D-4E1B-A1FE-DEAFB4F1B816}.Debug|x64.Build.0 = Debug|Any CPU
+		{024B5AA6-2E2D-4E1B-A1FE-DEAFB4F1B816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{024B5AA6-2E2D-4E1B-A1FE-DEAFB4F1B816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{024B5AA6-2E2D-4E1B-A1FE-DEAFB4F1B816}.Release|x64.ActiveCfg = Release|Any CPU
+		{024B5AA6-2E2D-4E1B-A1FE-DEAFB4F1B816}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

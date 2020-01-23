@@ -1,7 +1,15 @@
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1.1-bionic AS dotnet-runtime
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    software-properties-common \
+    && add-apt-repository ppa:jonathonf/ffmpeg-4 \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     ffmpeg \
+    libgdk3.0-cil \
     libgdiplus \
     cpio \
     lsb-release \
