@@ -1,4 +1,4 @@
-FROM nrandell/openvino-dotnet-core-runtime:3.1.1-2019.3.376-1 as native-build
+FROM nrandell/openvino-dotnet-core-runtime:3.1.1_4.2.0_2019_R3.1-1 as native-build
 
 ARG OPENCVSHARP_VERSION=4.2.0.20200108
 
@@ -21,8 +21,8 @@ WORKDIR /build
 
 
 RUN cmake \
-    -D OpenCV_DIR=/opt/intel/openvino/opencv/cmake \
-    -D InferenceEngine_DIR=/opt/intel/openvino/inference_engine/share \
+    -D OpenCV_DIR=/install/opencv/lib/cmake/opencv4 \
+    -D InferenceEngine_DIR=/install/inference-engine/share \
     -D CMAKE_INSTALL_PREFIX=/install \
     /source/opencvsharp/src
 
