@@ -6,3 +6,4 @@ obj/
 *.so
 *.dll
 published/
+!Docker/openvinocvsharp/OpenVinoOpenCvSharpExtern.dll
