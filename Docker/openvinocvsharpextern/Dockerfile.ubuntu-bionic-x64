@@ -1,6 +1,7 @@
-FROM nrandell/openvino-dotnet-core-runtime:3.1.1-2019.3.376-1 as native-build
+ARG VERSION
+FROM nrandell/openvino-dotnet-core-runtime:${VERSION} as native-build
 
-ARG OPENCVSHARP_VERSION=4.2.0.20200108
+ARG OPENCVSHARP_VERSION
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \

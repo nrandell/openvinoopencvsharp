@@ -1,4 +1,5 @@
 ﻿using OpenCvSharp;
+using OpenCvSharp.Dnn;
 using Shared;
 using System;
 using System.Diagnostics;
@@ -12,7 +13,7 @@ namespace StandaloneFaceDetection
     {
         public static async Task<int> Main(string[] args)
         {
-            if (args.Length != 4)
+            if (args.Length < 4)
             {
                 Console.WriteLine("usage: StandaloneFaceDetection <input format> <input camera> <model> <output>");
                 return -1;
@@ -29,6 +30,8 @@ namespace StandaloneFaceDetection
                 var inputCamera = args[1];
                 var model = args[2];
                 var output = args[3];
+                var target = args.Length < 5 ? Net.Target.CPU : Enum.Parse<Net.Target>(args[4]);
+                var backend = args.Length < 6 ? Net.Backend.OPENCV : Enum.Parse<Net.Backend>(args[5]); 
 
                 var outputFolder = new DirectoryInfo(output);
                 if (!outputFolder.Exists)
@@ -40,7 +43,7 @@ namespace StandaloneFaceDetection
                 IDetector detector;
                 if (model.EndsWith("bin", StringComparison.OrdinalIgnoreCase))
                 {
-                    detector = new InferenceEngineDetector(model);
+                    detector = new InferenceEngineDetector(model, backend, target);
                 }
                 else if (model.EndsWith("cfg", StringComparison.OrdinalIgnoreCase))
                 {

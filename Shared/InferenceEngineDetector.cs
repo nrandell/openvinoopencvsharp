@@ -3,6 +3,7 @@ using OpenCvSharp.Dnn;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System;
 
 namespace Shared
 {
@@ -11,11 +12,13 @@ namespace Shared
         public Net Net { get; }
         public Mat OutputMat { get; }
 
-        public InferenceEngineDetector(string modelFile)
+        public InferenceEngineDetector(string modelFile, Net.Backend backend, Net.Target target)
         {
             Net = CvDnn.ReadNet(Path.ChangeExtension(modelFile, ".bin"), Path.ChangeExtension(modelFile, ".xml"));
-            Net.SetPreferableBackend(Net.Backend.INFERENCE_ENGINE);
-            Net.SetPreferableTarget(Net.Target.MYRIAD);
+            Net.SetPreferableTarget(target);
+            Net.SetPreferableBackend(backend);
+            Console.WriteLine($"Backend = '{backend}', Target = '{target}'");
+            
             //Net.SetPreferableBackend(Net.Backend.INFERENCE_ENGINE);
             //Net.SetPreferableTarget(Net.Target.OPENCL_FP16);
             //Net.SetPreferableTarget(Net.Target.OPENCL_FP16);
