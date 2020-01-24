@@ -24,7 +24,7 @@ WORKDIR /build
 
 RUN cmake \
     -D OpenCV_DIR=/install/opencv/lib/cmake/opencv4 \
-    -D InferenceEngine_DIR=/install/inference-engine/share \
+    -D InferenceEngine_DIR=/install/inference-engine/build \
     -D CMAKE_INSTALL_PREFIX=/install \
     /source/opencvsharp/src
 

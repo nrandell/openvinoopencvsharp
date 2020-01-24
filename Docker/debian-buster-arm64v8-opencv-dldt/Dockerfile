@@ -69,7 +69,7 @@ RUN cmake \
     -D InferenceEngine_DIR=/install/inference-engine/build \
     -D CMAKE_TOOLCHAIN_FILE="/source/opencv/platforms/linux/aarch64-gnu.toolchain.cmake" \
     -D CMAKE_INSTALL_PREFIX=/install/opencv \
-     -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_BUILD_TYPE=RELEASE \
     -D BUIlD_SHARED_LIBS=OFF \
     -D BUILD_DOCS=OFF \
     -D BUILD_EXAMPLES=OFF \
