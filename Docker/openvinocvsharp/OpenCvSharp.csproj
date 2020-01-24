@@ -5,13 +5,14 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>Nick.OpenVinoCvSharp</AssemblyName>
     <PackageId>Nick.OpenVinoCvSharp</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <Configurations>Release</Configurations>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>1.0.1-beta.3</Version>
+    <Version>1.0.1-beta.6</Version>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -22,6 +23,7 @@
     <Content CopyToOutputDirectory="PreserveNewest" Include="./ubuntu-18.04-x64-build/libOpenVinoOpenCvSharpExtern.so" Pack="true" PackagePath="runtimes/ubuntu.18.04-x64/native/libOpenCvSharpExtern.so" />
     <Content CopyToOutputDirectory="PreserveNewest" Include="./debian-10-arm64-build/libOpenVinoOpenCvSharpExtern.so" Pack="true" PackagePath="runtimes/debian.10-arm64/native/libOpenCvSharpExtern.so" />
     <Content CopyToOutputDirectory="PreserveNewest" Include="./debian-10-arm32-build/libOpenVinoOpenCvSharpExtern.so" Pack="true" PackagePath="runtimes/debian.10-arm/native/libOpenCvSharpExtern.so" />
+    <Content CopyToOutputDirectory="PreserveNewest" Include="./OpenVinoOpenCvSharpExtern.dll" Pack="true" PackagePath="runtimes/win10-x64/native/OpenCvSharpExtern.dll" />
   </ItemGroup>
 
 

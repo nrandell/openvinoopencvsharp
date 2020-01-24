@@ -1,10 +1,11 @@
-FROM nrandell/openvinocvsharpextern:x64-3.1.1-2019.3.376-2 as ubuntu-18.04-x64-build
-FROM nrandell/openvinocvsharpextern:arm64-3.1.1-2019.3.376-2 as debian-10-arm64-build
-FROM nrandell/openvinocvsharpextern:arm32-3.1.1-2019.3.334-2 as debian-10-arm32-build
+ARG OPENCVSHARPEXTERN_VERSION
+FROM nrandell/openvinocvsharpextern:x64-${OPENCVSHARPEXTERN_VERSION} as ubuntu-18.04-x64-build
+FROM nrandell/openvinocvsharpextern:arm64-${OPENCVSHARPEXTERN_VERSION} as debian-10-arm64-build
+FROM nrandell/openvinocvsharpextern:arm32-${OPENCVSHARPEXTERN_VERSION} as debian-10-arm32-build
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1.101-buster as build-dotnet
 
-ARG OPENCVSHARP_VERSION=4.2.0.20200108
+ARG OPENCVSHARP_VERSION
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
@@ -18,7 +19,7 @@ RUN wget https://github.com/shimat/opencvsharp/archive/${OPENCVSHARP_VERSION}.zi
     mv opencvsharp-${OPENCVSHARP_VERSION} opencvsharp 
 
 WORKDIR /source/opencvsharp/src/OpenCvSharp/
-COPY ["OpenCvSharp.csproj", "./"]
+COPY ["OpenCvSharp.csproj", "OpenVinoOpenCvSharpExtern.dll", "./"]
 COPY --from=ubuntu-18.04-x64-build /install/lib/libOpenVinoOpenCvSharpExtern.so ./ubuntu-18.04-x64-build/
 COPY --from=debian-10-arm64-build /install/lib/libOpenVinoOpenCvSharpExtern.so ./debian-10-arm64-build/
 COPY --from=debian-10-arm32-build /install/lib/libOpenVinoOpenCvSharpExtern.so ./debian-10-arm32-build/
