@@ -35,6 +35,7 @@ try {
 
         cmake `
                 -D CMAKE_INSTALL_PREFIX=..\install `
+                -D CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE `
                 ..\opencvsharp\src
 
         cmake --build . --config Release
