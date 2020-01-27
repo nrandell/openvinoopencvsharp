@@ -1,5 +1,7 @@
-VERSION="1.0.0"
+#! /bin/bash
 
-docker buildx build --platform linux/arm64 -t "nrandell/xxx:$VERSION" -f Dockerfile --load .
+. ../variables.sh
+
+docker buildx build --platform linux/arm64 -t "${BASE_IMAGE}:${X64_VERSION}" -f Dockerfile --push .
 
 

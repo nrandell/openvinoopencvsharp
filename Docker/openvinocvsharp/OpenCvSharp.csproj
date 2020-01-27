@@ -12,7 +12,7 @@
     <Configurations>Release</Configurations>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>1.0.1-beta.6</Version>
+    <Version>1.0.1-beta.7</Version>
   </PropertyGroup>
 
   <PropertyGroup>
