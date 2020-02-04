@@ -18,5 +18,27 @@ RUN mkdir -p $TEMP_DIR \
     && cd / \
     && rm -rf ${TEMP_DIR}
 
+FROM dotnet-runtime as native-build
+RUN apt-get update  && apt-get install -y --no-install-recommends \
+    wget \
+    build-essential \
+    unzip \
+    autoconf \
+    automake \
+    libtool
+
+WORKDIR /build
+RUN wget https://github.com/libusb/libusb/archive/v1.0.22.zip \
+    && unzip v1.0.22.zip \
+    && cd libusb-1.0.22 \
+    && ./bootstrap.sh \
+    && ./configure --disable-udev --enable-shared \
+    && make -j4 \
+    && make install
+
+
+FROM dotnet-runtime
+COPY --from=native-build ["/usr/local/lib/libusb-1.0.so.0.1.0", "/lib/arm-linux-gnueabihf/libusb-1.0.so.0.1.0"]
+
 ENV LD_LIBRARY_PATH=/opt/intel/openvino/opencv/lib:/opt/intel/openvino/inference_engine/lib/armv7l
 

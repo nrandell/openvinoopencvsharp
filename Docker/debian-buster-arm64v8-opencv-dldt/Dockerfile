@@ -107,8 +107,24 @@ RUN cmake \
 RUN make -j$(nproc)
 RUN make install
 
+WORKDIR /build
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    automake \
+    libtool
+
+
+RUN  wget https://github.com/libusb/libusb/archive/v1.0.22.zip \
+    && unzip v1.0.22.zip && cd libusb-1.0.22 \
+    && ./bootstrap.sh \
+    && ./configure --disable-udev --enable-shared \
+    && make -j4 \
+    && make install
+
 FROM dotnet-runtime as final
 
+
 COPY --from=native-build /install /install
+COPY --from=native-build ["/usr/local/lib/libusb-1.0.so.0.1.0", "/lib/aarch64-linux-gnu/libusb-1.0.so.0.1.0"]
 ENV LD_LIBRARY_PATH=/install/opencv/lib:/install/inference-engine/bin/aarch64/Release/lib
 

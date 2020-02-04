@@ -31,4 +31,26 @@ RUN cd $TEMP_DIR && \
     ./install.sh -s silent.cfg && \
     rm -rf $TEMP_DIR
 
+FROM dotnet-runtime as native-build
+RUN apt-get update  && apt-get install -y --no-install-recommends \
+    wget \
+    build-essential \
+    unzip \
+    autoconf \
+    automake \
+    libtool
+
+WORKDIR /build
+RUN wget https://github.com/libusb/libusb/archive/v1.0.22.zip \
+    && unzip v1.0.22.zip \
+    && cd libusb-1.0.22 \
+    && ./bootstrap.sh \
+    && ./configure --disable-udev --enable-shared \
+    && make -j4 \
+    && make install
+
+
+FROM dotnet-runtime
+COPY --from=native-build ["/usr/local/lib/libusb-1.0.so.0.1.0", "/lib/x86_64-linux-gnu/libusb-1.0.so.0.1.0"]
+
 ENV LD_LIBRARY_PATH=/opt:/opt/intel/openvino/opencv/lib:/opt/intel/openvino/deployment_tools/inference_engine/external/hddl/lib:/opt/intel/openvino/deployment_tools/inference_engine/external/gna/lib:/opt/intel/openvino/deployment_tools/inference_engine/external/mkltiny_lnx/lib:/opt/intel/openvino/deployment_tools/inference_engine/external/tbb/lib:/opt/intel/openvino/deployment_tools/inference_engine/lib/intel64:/opt/intel/openvino/openvx/lib

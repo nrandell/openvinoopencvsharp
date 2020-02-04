@@ -2,7 +2,7 @@
 OPENCV_VERSION="4.1.2"
 OPENCVSHARP_VERSION="4.1.1.20191217"
 
-VERSION_INC=5
+VERSION_INC=6
 BASE_IMAGE="nrandell/openvino-dotnet-core-runtime"
 ASPNET_IMAGE="nrandell/openvino-aspnet"
 X64_VERSION="3.1.1-2019.3.376-${VERSION_INC}"
