@@ -68,8 +68,9 @@ RUN cmake \
 RUN make -j$(nproc)
 
 
-# FROM dotnet-runtime
-# COPY --from=native-build ["/usr/local/lib/libusb-1.0.so.0.1.0", "/lib/aarch64-linux-gnu/libusb-1.0.so.0.1.0"]
-# ENV LD_LIBRARY_PATH=/install/inference-engine/bin/aarch64/Release/lib
+FROM dotnet-runtime
+COPY --from=native-build ["/usr/local/lib/libusb-1.0.so.0.1.0", "/lib/aarch64-linux-gnu/libusb-1.0.so.0.1.0"]
+COPY --from=native-build ["/source/dldt","/install/dldt"]
+ENV LD_LIBRARY_PATH=/install/dldt/bin/aarch64/Release/lib
 
 
