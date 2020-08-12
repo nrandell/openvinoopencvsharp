@@ -1,11 +1,13 @@
 FROM mcr.microsoft.com/dotnet/runtime:5.0.0-preview.7-focal AS dotnet-runtime
+    # apt-get install -y --no-install-recommends \
+    # software-properties-common \
+    # && add-apt-repository ppa:jonathonf/ffmpeg-4 \
+    # && apt-get update \
+    # && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 
-RUN apt-get update && \
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get update && \
     apt-get install -y --no-install-recommends \
-    software-properties-common \
-    && add-apt-repository ppa:jonathonf/ffmpeg-4 \
-    && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     ffmpeg \
     libgdk3.0-cil \
     libgdiplus \
