@@ -23,7 +23,7 @@ RUN apt-get update  && apt-get install -y --no-install-recommends \
 
 # Build inference engine
 WORKDIR /source
-RUN git clone --no-checkout https://github.com/opencv/dldt.git
+RUN git clone --no-checkout https://github.com/openvinotoolkit/openvino
 WORKDIR /source/dldt
 RUN git checkout tags/${DLDT_VERSION}
 

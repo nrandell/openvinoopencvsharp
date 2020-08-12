@@ -1,6 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1.1-bionic AS dotnet-runtime
-
-
+FROM mcr.microsoft.com/dotnet/runtime:5.0.0-preview.7-focal AS dotnet-runtime
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -15,7 +13,7 @@ RUN apt-get update && \
     lsb-release \
     wget
 
-ARG DOWNLOAD_LINK=http://registrationcenter-download.intel.com/akdlm/irc_nas/16057/l_openvino_toolkit_p_2019.3.376.tgz
+ARG DOWNLOAD_LINK=http://registrationcenter-download.intel.com/akdlm/irc_nas/16803/l_openvino_toolkit_p_2020.4.287.tgz
 ARG INSTALL_DIR=/opt/intel/openvino
 ARG TEMP_DIR=/tmp/openvino_installer
 
